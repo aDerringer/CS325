@@ -1,3 +1,9 @@
+/************************************************
+ * Author: Andrew Derringer
+ * Program: Insert/Merge Comparison
+ * Last Edit: 10/6/2019
+ * Description: Two methods of list sorting
+************************************************/
 #ifndef SORT_H
 #define SORT_H
 

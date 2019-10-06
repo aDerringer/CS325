@@ -1,7 +1,19 @@
+/************************************************
+ * Author: Andrew Derringer
+ * Program: Insert/Merge Comparison
+ * Last Edit: 10/6/2019
+ * Description: Useful utility functions including input validation
+ * 		and print functions.
+************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
+/*
+ * Description: prints array of size n
+ * Param: array and its size
+ * Ret: None
+*/
 void printArr(int arr[], int n) {
    for(int i = 0; i < n; i ++) {
       if(i == n - 1) {
@@ -12,6 +24,12 @@ void printArr(int arr[], int n) {
    }
 }
 
+/*
+ * Description: performs getline() and determines if input was an
+ * 		in of acceptable perameters. Returns it.
+ * Param: string of input request and min and max input range.v
+ * Ret: int of an acceptable input
+*/
 int intInput(char* statement, int min, int max) {
    printf(statement);
    printf("\n");
@@ -24,14 +42,11 @@ int intInput(char* statement, int min, int max) {
    inputString = (char*)malloc(sizeof(char) * inputSize);
    getline(&inputString, &inputSize, stdin);
 
-   //printf("You entered %s.\n", inputString);
-
    while(!isInt) {
       isInt = true;
 
       int i = 0;
       while(inputString[i] != 10) {
-      //for(int i = 0; i < inputSize; i++) {
          if(inputString[i] >= 48 && inputString[i] <= 57) {
             inputInt *= 10;
             inputInt += (inputString[i] - 48);

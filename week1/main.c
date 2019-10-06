@@ -1,3 +1,11 @@
+/************************************************
+ * Author: Andrew Derringer
+ * Program: Insert/Merge Comparison
+ * Last Edit: 10/6/2019
+ * Description: Reads and outputs sorted arrays by input and merge method.
+ * 		Offers to perform analysis of 10 different sized arrays
+ * 		using both methods.
+************************************************/
 #include "utilities.h"
 #include "sort.h"
 #include "fileio.h"
@@ -5,6 +13,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+//Creats a rndomized array of size in and sorts it.
+//ret: time it took to sort
 double mergeTime(int size) {
    int arr[size];
    clock_t start, end;
@@ -21,6 +31,8 @@ double mergeTime(int size) {
    return ((double) (end - start)) / CLOCKS_PER_SEC;
 }
 
+//Creats a rndomized array of size in and sorts it.
+//ret: time it took to sort
 double insertTime(int size) {
    int arr[size];
    clock_t start, end;
