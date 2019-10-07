@@ -13,6 +13,7 @@
  * Param: Array address
  * Param: Size of passed array
  * Ret: Array reference rearranged in memory
+ * Cite: Inspired by geeksforgeeks.org/insertion-sort/
 */
 void insertSort(int inputArr[],int n) {
    int key, i, j;
@@ -91,6 +92,7 @@ void merge(int arr[], int leftIdx, int midIdx, int rightIdx) {
  * Param: Array address
  * Param: Index locations of its left  and right index
  * Ret: Array reference rearrange in mem
+ * Cite: Inspired by geeksforgeeks.org/merge-sort/
 */
 void mergeSort(int inputArr[], int leftIdx, int rightIdx) {
    if(leftIdx < rightIdx) {
