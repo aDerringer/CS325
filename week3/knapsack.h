@@ -5,15 +5,11 @@
  * Description: Useful utility functions including input validation
  * 		and print functions.
 ************************************************/
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#ifndef KNAPSACK_H
+#define KNAPSACK_H
 
-#include <stdio.h>
+int max(int, int);
 
-void printArr(int*, int);
-
-void printArrKP(FILE*, int*, int);
-
-int intInput(char*, int, int);
+int* knapSack(int, int[], int[], int);
  
 #endif

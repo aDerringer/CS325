@@ -4,7 +4,7 @@ test run time analysis as well.
 
 Run following commands to execute:
 make
-./sortProgram
+./shop
 
 Run following command to clean executables and object files:
 make clean

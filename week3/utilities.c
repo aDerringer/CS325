@@ -24,6 +24,16 @@ void printArr(int arr[], int n) {
    }
 }
 
+void printArrKP(FILE* fileOut, int arr[], int n) {
+   for(int i = 0; i < n; i ++) {
+      if(arr[i] == 1) {
+         fprintf(fileOut, "%d ", i);
+      }
+   }
+   fprintf(fileOut, "\n");
+ 
+}
+
 /*
  * Description: performs getline() and determines if input was an
  * 		in of acceptable perameters. Returns it.

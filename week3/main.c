@@ -1,101 +1,91 @@
 /************************************************
  * Author: Andrew Derringer
- * Program: Insert/Merge/Stooge Comparison
- * Last Edit: 10/13/2019
- * Description: Reads and outputs sorted arrays by insert, merge, and stooge method.
- * 		Offers to perform analysis of 10 different sized arrays
- * 		using all three methods.
+ * Program: Knap Sack Algorithm
+ * Last Edit: 10/22/2019
+ * Description: Finds optimal value of items to claim
+ * 		given a constraint of total carrying
+ * 		capacity for a group of individuals.
 ************************************************/
 #include "utilities.h"
-#include "sort.h"
-#include "fileio.h"
+//#include "sort.h"
+//#include "fileio.h"
+#include "knapsack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-//Creats a rndomized array of size in and sorts it.
-//ret: time it took to sort
-double stoogeTime(int size) {
-   int arr[size];
-   clock_t start, end;
-
-   for(int i = 0; i < size; i++) {
-      arr[i] = rand();
-   }
-   //printArr(arr, size);
-
-   start = clock();
-   stoogeSort(arr, 0, size - 1);
-   end = clock();
-
-   return ((double) (end - start)) / CLOCKS_PER_SEC;
-}
-
-
-//Creats a rndomized array of size in and sorts it.
-//ret: time it took to sort
-double mergeTime(int size) {
-   int arr[size];
-   clock_t start, end;
-
-   for(int i = 0; i < size; i++) {
-      arr[i] = rand();
-   }
-   //printArr(arr, size);
-
-   start = clock();
-   mergeSort(arr, 0, size -1 );
-   end = clock();
-
-   return ((double) (end - start)) / CLOCKS_PER_SEC;
-}
-
-//Creats a rndomized array of size in and sorts it.
-//ret: time it took to sort
-double insertTime(int size) {
-   int arr[size];
-   clock_t start, end;
-
-   for(int i = 0; i < size; i++) {
-      arr[i] = rand();
-   }
-   //printArr(arr, size);
-
-   start = clock();
-   insertSort(arr, size);
-   end = clock();
-
-   return ((double) (end - start)) / CLOCKS_PER_SEC;
-}
-
 int main () {
-   srand(0);
 
-   char *fileName = "data.txt";
-   arrFile(fileName, 1);
-   arrFile(fileName, 2);
-   arrFile(fileName, 3);
+   FILE *filePtr;
+   filePtr = fopen("shopping.txt","r");
+   if(filePtr == NULL) {
+      printf("Invalid file\n");
+      exit(0);
+   }
+   FILE *fileOut;
+   fileOut = fopen("results.txt","w");
 
-   //printf("Files output to merge.txt and insert.txt...\n");
-   printf("Would you like to run a sort time analysis? (This may take several minutes):\n");
-   int num = intInput("1)Yes\n2)No", 1, 2);
-   
-   if(num == 1) {
-      int insertSizes[10] = {20000, 40000, 60000, 80000, 100000, 120000, 160000, 200000, 250000, 350000};
-      int mergeSizes[10] = {50000, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000};
-      int stoogeSizes[10] = {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000};
 
-      for(int i = 0; i < 10; i++) {
-         printf("N = %8d Insert = %6.5f\n", insertSizes[i], insertTime(insertSizes[i]));
-         printf("N = %8d Merge = %6.5f\n", mergeSizes[i], mergeTime(mergeSizes[i]));
-         printf("N = %8d Stooge = %6.5f\n", stoogeSizes[i], stoogeTime(stoogeSizes[i]));
-         if (i != 9) {
-            printf("\n");
-         }
+   int trials, i, itemCount, j, famSize, k;
+
+   //while (fscanf(filePtr, "%50[^\n]\n", buffer) != EOF) {
+      
+   //}
+
+   fscanf(filePtr, "%2d", &trials);
+   //printf("Trials: %d\n", trials);
+
+   for (i = 0; i < trials; i++) {
+
+      fscanf(filePtr, "%2d", &itemCount);
+      int prices[itemCount];
+      int weight[itemCount];
+      for (j = 0; j < itemCount; j++) {
+         fscanf(filePtr, "%2d %2d", &prices[j], &weight[j]);
       }
+
+      fscanf(filePtr, "%2d", &famSize);
+      int famCapacity[famSize];
+      //int famMax[famSize];
+      int totalMax = 0;
+
+      fprintf(fileOut, "Test Case %d\n", i + 1);
+      //printf("Total Price %d\n", totalMax);
+      //streampos jumpBack = fileOut.tellg();
+      fprintf(fileOut, "Member Items\n");
+
+      for (k = 0; k < famSize; k++) {
+         fscanf(filePtr, "%2d", &famCapacity[k]);
+         int* itemsUsed = knapSack(famCapacity[k], weight, prices, itemCount);
+         //famMax[k] = famChart[itemCount][(famCapacity[k])];
+         fprintf(fileOut, "\t%d: ", k + 1);
+         printArrKP(fileOut, itemsUsed, itemCount);
+         //famMax[k] = knapSack(famCapacity[k], weight, prices, itemCount);
+         //totalMax += famMax[k];
+         
+         for (j = 0; j < itemCount; j++) {
+            if (itemsUsed[j] == 1) {
+               totalMax += prices[j];
+            }
+         }
+
+         if (k == famSize -1) {
+            //fprintf(fileOut, "\n");
+         }
+
+      }
+      //streampos jumpForward = fileOut.tellg();
+      //fileOut.seekg(jumpBack);
+      fprintf(fileOut, "Total Price %d\n\n", totalMax);
+      //fileOut.seekg(jumpForward);
+
    }
 
-   printf("Program End...\n");
-   
+
+   //printf("trials = %d\n", trials);
+   fclose(fileOut);
+   fclose(filePtr);
+
    return 0;
+
 }
