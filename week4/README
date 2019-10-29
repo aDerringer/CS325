@@ -1,0 +1,10 @@
+makefile provided for compiling into executable.
+Upone execution user is presented with option to
+test run time analysis as well.
+
+Run following commands to execute:
+make
+./shop
+
+Run following command to clean executables and object files:
+make clean
