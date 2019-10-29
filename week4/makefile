@@ -1,9 +1,9 @@
 # Source, Executable, Includes, Library Defines
 INCL   = 
-SRC    = main.c utilities.c knapsack.c
+SRC    = main.c utilities.c sort.c
 OBJ    = $(SRC:.c=.o)
 LIBS   = 
-EXE    = shop
+EXE    = greed
 
 # Compiler, Linker Defines
 CC      = /usr/bin/gcc
@@ -30,4 +30,4 @@ debug:
 
 # Clean Up Objects, Exectuables, Dumps out of source directory
 clean:
-	$(RM) $(OBJ) $(EXE) merge.txt insert.txt stooge.txt results.txt
+	$(RM) $(OBJ) $(EXE)

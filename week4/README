@@ -4,7 +4,7 @@ test run time analysis as well.
 
 Run following commands to execute:
 make
-./shop
+./greed
 
 Run following command to clean executables and object files:
 make clean
