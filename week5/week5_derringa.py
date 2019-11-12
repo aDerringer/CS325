@@ -1,69 +1,42 @@
-import sys
+#################################################
+# Program: Wrestling Rivals
+# Author: Andrew Derringer
+# Last Modified: 11/11/2019
+# Summary: Opens file, reads its contents and uses
+#	imported classes to find relationships
+#################################################
 
-def buildArr(rows, cols):
-   arr = [["" for i in range(cols)] for j in range(rows)]
-   return arr
+import sys
+from myGraph import Graph, Vertex
 
 def readFile(filename, roster):
    iFile = open(filename, "r")
-   #roster = {}
-
+ 
+   # read lines of names from file and put into graph unconnected
    rosterCount = int(iFile.readline())
    for line in range(rosterCount):
-      roster.update({(iFile.readline()).replace('\n', ''): "white"})
+      if line == 0:
+         roster.add_vertex(Vertex((iFile.readline()).replace('\n', ''), "blue"))
+      else:
+         roster.add_vertex(Vertex((iFile.readline()).replace('\n', ''), "white"))
 
+   # go through pairs and connect names to already made vertices
+   # connect the vertices and assign colors
    pairs = int(iFile.readline())
-   #arr = buildArr(pairs, 2)
-   print(roster)
-   currPair = 0
-   possible = True
-
-   while currPair < pairs and possible == True:
-      p1, p2 = (iFile.readline()).split(" ")
-      #p2.rstrip('\r\n')
-      print(p1)
-      print(p2[0:-1])
-      possible = rivalry(p1, p2[0:-1], roster)
-      currPair += 1
+   for line in range(pairs):
+      p1, p2 = (iFile.readline()).split(" ")        
+      p2.rstrip('\r\n')
+      a = roster.getVertex(p1)
+      b = roster.getVertex(p2[0:-1])
+      a.add_neighbor(b)
+      b.add_neighbor(a)
+      roster.assignColors(a, b)
 
    iFile.close()
-   return possible
-
-
-def rivalry(p1, p2, roster):
-   possible = True
-   if roster[p1] == roster[p2] and roster[p1] != "white":
-      possible = False
-   elif roster[p1] == "red":
-      roster[p2] = "blue"
-   elif roster[p2] == "red":
-      roster[p1] = "blue"
-   else:
-      roster[p1] = "blue"
-      roster[p2] = "red"
-
-   return possible
-
-def formPrint(roster):
-   good = "Good guys: "
-   bad = "Heels: "
-
-   for wrestler in roster:
-      if roster[wrestler] == "blue":
-         good += "{}, ".format(wrestler)
-      elif roster[wrestler] == "red":
-         bad += "{}, ".format(wrestler)
-
-   print(good[0:-2])
-   print(bad[0:-2])
 
 def rivalries():
-   roster = {}
-   possible = readFile(sys.argv[1], roster)
-
-   print(roster)
-
-   if possible == True:
-      formPrint(roster)
+   roster = Graph()
+   readFile(sys.argv[1], roster)
+   roster.printTeams()
 
 rivalries()
