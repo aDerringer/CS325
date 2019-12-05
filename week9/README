@@ -1,0 +1,9 @@
+Andrew Derringer
+
+Program takes the text file you wish to test with as an argument
+on the command line. If using the bin.txt file detailed in the
+assignment description then run the program by entering:
+
+python3 bins_derringa.py bin.txt
+
+
